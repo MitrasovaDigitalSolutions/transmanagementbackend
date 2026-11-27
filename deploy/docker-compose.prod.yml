@@ -1,0 +1,26 @@
+services:
+  transmanagement-backend:
+    image: ghcr.io/mitrasovadigitalsolutions/transmanagementbackend:latest
+    container_name: transmanagement-backend-app
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PHP_CLI_SERVER_WORKERS: "4"
+    ports:
+      - "8090:8080"
+    networks:
+      pos-network:
+        aliases:
+          - transmanagement-backend
+    volumes:
+      - transmanagement-storage:/var/www/html/storage
+    mem_limit: 256m
+    cpus: 0.5
+
+networks:
+  pos-network:
+    external: true
+    name: pos-backend-docker_pos-network
+
+volumes:
+  transmanagement-storage:
