@@ -194,7 +194,13 @@ find "$DIR" -maxdepth 1 -type f -mtime +14 -delete
 echo "[$(date '+%F %T')] transmanagement backup ok"
 ```
 
-Pasang cron harian (mis. `15 2 * * *`). **Uji restore minimal sekali** ke database sementara:
+Pasang cron harian (mis. `15 2 * * *`):
+
+```cron
+15 2 * * * /home/ubuntu/backups/transmanagement/backup.sh >> /home/ubuntu/backups/transmanagement/backup.log 2>&1
+```
+
+**Uji restore minimal sekali** ke database sementara:
 
 ```bash
 docker exec pos-backend-db-prod psql -U postgres.rlzufmgrrevfwzvtture -c "CREATE DATABASE transmanagement_restore_test OWNER transmanagement;"
