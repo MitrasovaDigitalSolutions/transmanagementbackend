@@ -1,7 +1,6 @@
 <?php
 
 use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
-use Dedoc\Scramble\OpenApiVersion;
 use Dedoc\Scramble\SecurityDocumentation\MiddlewareAuthSecurityStrategy;
 
 return [
@@ -46,7 +45,10 @@ return [
     /*
      * OpenAPI version of the resulting document.
      */
-    'openapi_version' => OpenApiVersion::V3_1,
+    /*
+     * OpenAPI version is left to Scramble's default (3.1) so the production
+     * image (composer install --no-dev) can boot without the Scramble package.
+     */
 
     'info' => [
         /*
