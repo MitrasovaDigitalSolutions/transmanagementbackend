@@ -50,7 +50,7 @@ docker network inspect pos-backend-docker_pos-network \
 | Port host | **8090** → container 8080 |
 | Network | external `pos-backend-docker_pos-network`, alias `transmanagement-backend` |
 | Volume | `transmanagement-storage:/var/www/html/storage` |
-| Direktori deploy | `/home/workspace/transmanagement-backend-docker/` |
+| Direktori deploy | `/home/ubuntu/transmanagement-backend-docker/` |
 | DB | `transmanagement_prod`, role `transmanagement`, di container Postgres yang sudah jalan |
 
 Jangan membuat container Postgres baru. Sebelum memakai port 8090, pastikan belum terpakai:
@@ -85,7 +85,7 @@ Output harus `transmanagement_prod | transmanagement`. Kalau gagal, perbaiki dul
 
 ## 5. Env produksi
 
-Buat `/home/workspace/transmanagement-backend-docker/.env` (jangan commit):
+Buat `/home/ubuntu/transmanagement-backend-docker/.env` (jangan commit):
 
 ```dotenv
 APP_NAME="TransManagement"
@@ -132,8 +132,8 @@ docker exec transmanagement-backend-app php artisan db:seed --class=SuperadminSe
 ## 6. Menjalankan compose
 
 ```bash
-mkdir -p /home/workspace/transmanagement-backend-docker
-cd /home/workspace/transmanagement-backend-docker
+mkdir -p /home/ubuntu/transmanagement-backend-docker
+cd /home/ubuntu/transmanagement-backend-docker
 # salin deploy/docker-compose.prod.yml dari repo ke sini
 # isi .env seperti §5
 
@@ -228,7 +228,7 @@ gh run list --limit 3 --json databaseId,headSha,status,conclusion
 /home/ubuntu/backups/transmanagement/backup.sh
 
 # 2. deploy
-cd /home/workspace/transmanagement-backend-docker
+cd /home/ubuntu/transmanagement-backend-docker
 docker compose -f docker-compose.prod.yml pull
 docker compose -f docker-compose.prod.yml up -d --remove-orphans
 
