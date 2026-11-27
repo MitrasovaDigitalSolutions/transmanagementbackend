@@ -86,7 +86,9 @@ Lalu commit `public/openapi.json`. Image production tidak menginstal Scramble (`
 
 ## Deploy
 
-Lihat [DEPLOY.md](DEPLOY.md). Ringkas: image `ghcr.io/mitrasovadigitalsolutions/transmanagementbackend:latest`, port host `8090`, health check `GET /api/v1/health`, deploy manual via Docker Compose di VPS. CI GitHub Actions menjalankan test lalu build & push image ke GHCR saat push ke `main`.
+Production: `http://43.157.197.42:8090` — docs `/docs`, health `/api/v1/health`.
+
+Lihat [DEPLOY.md](DEPLOY.md). Ringkas: image `ghcr.io/mitrasovadigitalsolutions/transmanagementbackend:latest`, port host `8090`, deploy manual via Docker Compose di VPS. CI GitHub Actions menjalankan test lalu build & push image ke GHCR saat push ke `main`.
 
 ## Role
 

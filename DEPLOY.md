@@ -318,3 +318,38 @@ Simpan minimal 2–3 image versi terakhir sebelum prune.
 - Jangan build image di server (RAM mepet; build di CI).
 - Jangan `docker system prune -a` atau `docker volume prune`.
 - Jangan commit `.env`, password, atau `APP_KEY`.
+
+---
+
+## 15. Status deploy aktual (27 Nov 2026)
+
+| Item | Nilai |
+|---|---|
+| Image/commit | `ghcr.io/mitrasovadigitalsolutions/transmanagementbackend:latest` (commit `5a1b5f9`) |
+| Container | `transmanagement-backend-app`, Up, restart 0, OOM false |
+| Port | `8090` (publik, health dicek dari luar → 200) |
+| Direktori | `/home/ubuntu/transmanagement-backend-docker/` |
+| DB | `transmanagement_prod` / role `transmanagement`, migrasi sudah jalan |
+| Seeder | `RolePermissionSeeder` + `SuperadminSeeder` sudah dijalankan |
+| Superadmin | `admin@mitrasejatipersada.biz.id` (password hanya di `.env` server) |
+| Backup | `/home/ubuntu/backups/transmanagement/backup.sh`, cron `15 2 * * *`, uji restore OK |
+| Health | `http://43.157.197.42:8090/api/v1/health` → 200 |
+| Docs | `/docs`, `/openapi.json` → 200 |
+| Worker/scheduler | Tidak ada (belum dibutuhkan) |
+
+Password superadmin bisa dilihat oleh owner di server (jangan tempel di chat/log):
+
+```bash
+grep '^SUPERADMIN_PASSWORD=' /home/ubuntu/transmanagement-backend-docker/.env
+```
+
+Cek dampak ke layanan lain setelah deploy:
+
+- POS prod/dev: `https://kspmitrasejatipersada.biz.id/up` dan `https://dev.kspmitrasejatipersada.biz.id/up` → 200.
+- Landing page backend: `http://127.0.0.1:8088/api/v1/settings` (header `X-Site-Key`) → 200.
+- Nginx, POS prod, landing page: tidak ada error/502 di log 10 menit setelah deploy.
+- Semua container lama: restart 0, OOM false.
+- Postgres: 8 koneksi (max 100), tidak ada container DB baru.
+- Resource: app baru ±64 MB / 256 MB; RAM available ±984 MB; swap 445 MB; disk 47%.
+
+Catatan: `APP_URL` masih `http://43.157.197.42:8090` (belum domain/SSL). Kalau nanti pakai domain, update `.env` + recreate container agar signed URL dokumen ikut berubah.
