@@ -290,7 +290,9 @@ docker exec -i -e PGPASSWORD='<password-kuat>' pos-backend-db-prod \
 3. **Storage**: ekstrak `storage-<stamp>.tar.gz` ke volume kalau file ikut rusak:
 
 ```bash
-docker run --rm -i -v transmanagement-storage:/target alpine \
+VOL=$(docker inspect transmanagement-backend-app \
+  --format '{{range .Mounts}}{{if eq .Destination "/var/www/html/storage"}}{{.Name}}{{end}}{{end}}')
+docker run --rm -i -v "$VOL":/target alpine \
   tar xzf - -C /target < /home/ubuntu/backups/transmanagement/storage-<stamp>.tar.gz
 ```
 
