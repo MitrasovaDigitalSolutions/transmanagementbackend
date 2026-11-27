@@ -2,6 +2,8 @@
 
 Backend API manajemen armada: kendaraan, tipe kendaraan, crew (driver/kondektur), jadwal harian, role & permission, serta gallery media.
 
+Dokumen: [plan.md](plan.md) (backend), [frontend-plan.md](frontend-plan.md) (handover frontend), [DEPLOY.md](DEPLOY.md) (production).
+
 Stack: **Laravel 12 API-only**, Sanctum, spatie/laravel-permission, PHPUnit, Pint. SQLite untuk lokal/test, PostgreSQL untuk production.
 
 ## Setup Lokal
